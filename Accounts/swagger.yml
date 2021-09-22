@@ -34,8 +34,8 @@ securityDefinitions:
     flow: accessCode
     authorizationUrl: https://login.windows.net/common/oauth2/authorize
     tokenUrl: https://login.windows.net/common/oauth2/authorize
-    scopes: {'https://admin.services.crm.dynamics.com/user_impersonation': 'https://admin.services.crm.dynamics.com/user_impersonation'}
+    scopes: {'user_impersonation': 'user_impersonation', 'access_as_user': 'access_as_user'}
 security:
-- oauth2_auth: ['https://admin.services.crm.dynamics.com/user_impersonation']
+- oauth2_auth: ['user_impersonation', 'access_as_user']
 tags:
 - {name: dataverse, description: ''}
