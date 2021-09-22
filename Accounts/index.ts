@@ -8,6 +8,7 @@ import {getDataverseAPI, getToken } from '../lib/request'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
+    context.log(req.method, req.url)
     context.log(req.headers)
     const paths = new URL(req.url).pathname.split('/')
     const fnDir = paths[2]
@@ -23,7 +24,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
 
     const bearerToken = req.headers['authorization'].split(' ')[1]
-    let authResult = null;
     let data = null;
     let error = null
     try {
@@ -31,7 +31,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
             token: bearerToken,
             scope: `https://${config.orgHost}/user_impersonation`,
             tenant: config.tenant,
-            clientId: config.cliendId,
+            clientId: config.clientId,
             clientSecret: config.clientSecret,
         })
         context.log('Bearer Token', authResult.access_token)
