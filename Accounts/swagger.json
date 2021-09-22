@@ -1,0 +1,73 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Account API",
+    "description": "Get accounts from Dataverse",
+    "version": "1.0",
+    "contact": {}
+  },
+  "host": "formulated-obo-demo-fn.azurewebsites.net",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/api/accounts": {
+      "get": {
+        "summary": "Get Accounts",
+        "operationId": "AllAccounts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "oauth2_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+      "scopes": {
+        "https://admin.services.crm.dynamics.com/user_impersonation": "https://admin.services.crm.dynamics.com/user_impersonation"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2_auth": [
+        "https://admin.services.crm.dynamics.com/user_impersonation"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "dataverse",
+      "description": ""
+    }
+  ]
+}
