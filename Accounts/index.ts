@@ -6,9 +6,15 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import config from '../config'
 import {getDataverseAPI, getToken } from '../lib/request'
 
+const defaultJSONHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
+}
+
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
-    context.log(req.method, req.url)
+    context.log(`${req.method} - ${req.url}`)
     context.log(req.headers)
     const paths = new URL(req.url).pathname.split('/')
     const fnDir = paths[2]
@@ -16,9 +22,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     if (action === 'swagger' || !req.headers['authorization']) {
         context.res = {
             body: await swaggerFile(fnDir),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: defaultJSONHeaders
         }
         return 
     }
@@ -41,7 +45,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
     if (data) {
         context.res = {
-            body: data.value
+            body: data.value,
+            headers: defaultJSONHeaders
         };
         return
     }
